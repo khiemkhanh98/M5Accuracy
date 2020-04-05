@@ -1,1 +1,3 @@
-# M5Accuracy
+CHANGELOG
+
+- Added dataExploration function
