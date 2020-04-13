@@ -8,7 +8,7 @@ import lightgbm as lgb
 from sklearn import preprocessing, metrics
 
 
-def create_dt(is_train = True, nrows = None, first_day = 1200):
+def create_dt(is_train = True, nrows = None, first_day = 800):
     CAL_DTYPES={"event_name_1": "category", "event_name_2": "category", "event_type_1": "category", 
          "event_type_2": "category", "weekday": "category", 'wm_yr_wk': 'int16', "wday": "int16",
         "month": "int16", "year": "int16", "snap_CA": "float32", 'snap_TX': 'float32', 'snap_WI': 'float32' }
@@ -63,8 +63,8 @@ def create_dt(is_train = True, nrows = None, first_day = 1200):
     return dt
 
 def create_fea(dt):
-    #lags = [7, 28, 29, 30,31,90,180,365]
-    lags = [7]
+    lags = [7, 28, 29, 30,31,90,365]
+    #lags = [7]
     lag_cols = [f"lag_{lag}" for lag in lags]
     price_lag = [f"price_lag_{lag}" for lag in lags]
     for lag, lag_col, price_lag_col in zip(lags, lag_cols, price_lag):
@@ -93,5 +93,5 @@ def create_fea(dt):
     for feature in cat:
         dt[feature] = encoder.fit_transform(dt[feature])
         
-    dt.dropna(inplace = True)
+    #dt.dropna(inplace = True)
     return dt
